@@ -33,6 +33,7 @@ setAllItems();
 
     $("#itemSaveBtn").click((e) => {
         console.log('clicked');
+        console.log('test click')
         let name = $('#itemName').val();
         let description = $('#itemDescription').val();
         let price = $('#itemPrice').val();

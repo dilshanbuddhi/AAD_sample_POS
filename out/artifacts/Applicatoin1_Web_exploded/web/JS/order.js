@@ -1,4 +1,5 @@
 let cartdata= [];
+let tot = 0;
 
 const setcids = () => {
     $.ajax({
@@ -32,7 +33,7 @@ const setitemIds = () => {
             $('#itemSelect').empty();
             $('#itemSelect').append(`<option value="0">Select Item</option>`);
             for (let i = 0; i < data.length; i++) {
-                let row = `<option value="${data[i].id}">${data[i].name}</option>` ;
+                let row = `<option value="${data[i].id}">${data[i].id}</option>` ;
                 $('#itemSelect').append(row);
             }
         },
@@ -89,21 +90,17 @@ $("#customerSelect").on('change', (e) => {
             })
                 })
 
-$("#test").on("click", (e) => {
-    console.log("test");
-})
-
-$("#placeOrder").click((e) =>  {
-    console.log("fghjkl")
-})
 
 $("#cart_btn").click((e) => {
-    console.log('cart button clicked');
+    console.log('cart button clickeddddd');
     let cid = $('#customerSelect').val();
     let iid = $('#itemSelect').val();
-    let qty = $('#qty').val();
+    let qty = $('#quantity').val();
     let unitPrice = $('#unitPrice').val();
-    let total = $('#total').val();
+    let total = qty * unitPrice;
+    tot = tot + total;
+
+    console.log(cid, iid, qty, unitPrice, total);
 
     let cartobj = {cid, iid, qty, unitPrice, total};
     cartdata.push(cartobj);
@@ -125,3 +122,67 @@ function loadCartDAta(){
         $('#ordertable').append(row);
     }
 }
+
+$("#placeOrder").click((e) => {
+    let oid = 1;
+    let cid = $('#customerSelect').val();
+    let iid = $('#itemSelect').val();
+
+            $.ajax({
+                url : 'http://localhost:8080/Applicatoin1_Web_exploded/order',
+                method : 'POST',
+                data : {
+                    cid: cid,
+                    iid: iid,
+                    total: tot,
+                },
+
+                success : function (response) {
+                    console.log('order ekata data giya');
+                    console.log(response);
+                    orderdetails(oid);
+                },
+                error : function (error){
+                    console.log(error)
+                }
+            })
+        })
+
+        function orderdetails(oid) {
+            cartdata.forEach(element => {
+                console.log(element.iid, element.qty);
+                $.ajax({
+                    url : 'http://localhost:8080/Applicatoin1_Web_exploded/orderdetails',
+                    method : 'POST',
+                    data : {
+                        oid: oid,
+                        iid : element.iid,
+                    },
+                    success : function (response) {
+                        updateItems(element.iid, element.qty);
+                    },
+                    error : function (error){
+                        console.log(error)
+                    }
+                })
+
+            })
+        }
+
+        function updateItems(iid, qty) {
+            $.ajax({
+                url : 'http://localhost:8080/Applicatoin1_Web_exploded/orderdetails',
+                method : 'PUT',
+                data : JSON.stringify({
+                    iid: iid,
+                    qty: qty,
+                }),
+                success : function (response) {
+                    console.log(response);
+                },
+                error : function (error){
+                    console.log(error)
+                }
+            })
+            }
+
