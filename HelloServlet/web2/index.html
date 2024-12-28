@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<h1>Ajax Example Project</h1>
+<p id ="pra">this is first example of ajax</p>
+<button id="btn"> sent request</button>
+<button id="ajax-btn"> ajax request</button>
+
+<table>
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>add</th>
+    </tr>
+    </thead>
+
+    <tbody id="body">
+
+    </tbody>
+
+</table>
+<script src="web/assest/JS/jquery-3.7.1.min.js"></script>
+<!--
+<script>
+
+    $("#btn").click(function (){
+        console.log("clicked");
+        let xmlHttpRequest = new XMLHttpRequest();
+        console.log(xmlHttpRequest.readyState,"  object created...");
+        xmlHttpRequest.open('GET' , 'asset/add-product.png'); // page eks relosd krnne nthuwa
+
+            // method ekai URL ekai yawwanna one
+            //method is purpose of the req ('GET' , POST , PUT , DELETE .....)
+            //url is destination of method
+
+            console.log(xmlHttpRequest.readyState, "after the method invoked");
+            //ready eken enne xmlhttp obj eke current state eka .. method eka udata giyama detail balagnn puluwan
+            console.log(xmlHttpRequest.readyState);
+            console.log(xmlHttpRequest.readyState, " After the response");
+            xmlHttpRequest.send();
+            console.log(xmlHttpRequest.readyState, " after the sent method invoked");
+            console.log("req finished");
+            xmlHttpRequest.onreadystatechange = function () {
+                if (xmlHttpRequest.status == 200 && xmlHttpRequest.readyState == 4){
+                    console.log(xmlHttpRequest.readyState, " inside function");
+                    console.log(xmlHttpRequest.responseText);
+                    var txt = xmlHttpRequest.responseText;
+                    console.log(txt);
+                    console.log(xmlHttpRequest.status,"status");// 200 = OK  ,  404 not found server ekta dmmama ethnin ena responce eka
+
+                }else {
+                    console.log("onna oka thma prashne")
+                }
+                 }
+
+
+
+        //500+ wenkn enne server ekema responce eka
+        //400 - 500 wenkn enne client ekema responce eka
+
+    })
+</script>
+-->
+
+
+<!--
+new asyncrinous
+-->
+<script>
+  /*  $("#ajax-btn").click(function () {
+      console.log("start");
+      var http = new XMLHttpRequest();
+      http.open("GET" , "db/db.txt");
+      http.send();
+      http.onreadystatechange = function () {
+        if (http.status == 200 && http.readyState == 4){
+            console.log(http.responseText);
+            $("#pra").text(http.responseText)
+            console.log("middle")
+        }
+      }
+      console.log("end");
+    })*/
+</script>
+
+<script>
+
+    $("#ajax-btn").click( function (){
+        $.ajax({
+            url : 'https://localhost:8080/HelloServlet_Web_exploded/hello',
+            success : function (response) {
+                let data = response;
+                console.log(data);
+            },
+            error : function (error){
+                console.log(error)
+            }
+        })
+    })
+
+</script>
+
+<!--
+<script>
+
+        $("#ajax-btn").click( function (){
+            $.ajax({
+                url : "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js",
+                method : 'GET',
+                async :false,
+                success : function (response) {
+                    let data = response;
+                    console.log(data);
+                },
+                error : function (error){
+                    console.log(error)
+                }
+            })
+                })
+
+</script>
+-->
+
+<script>
+   /* console.log("first");
+    console.log("second");
+    console.log("third");
+
+    console.log("start");
+    setTimeout(() =>{
+      console.log("middle");
+    },2000)
+    console.log("end");*/
+</script>
+
+
+</body>
+</html>

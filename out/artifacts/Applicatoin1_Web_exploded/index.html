@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Navbar Styling */
+        .navbar {
+            background-color: #343a40;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }.navbar {
+             position: fixed;
+             top: 0;
+             left: 0;
+             width: 100%;
+             z-index: 1000; /* Ensures the navbar stays on top of other content */
+             background-color: #333; /* Optional: Change navbar background color */
+             padding: 10px 0; /* Optional: Adjust padding for the navbar */
+         }
+        
+#customer_sec, #item_sec, #placeOrder_sec {
+    margin-top: 100px;
+}
+
+        #placeOrder_sec{
+            padding: 50px;
+            padding-top: 10px;
+        }
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff !important;
+        }
+
+        .navbar-nav .nav-link {
+            color: #f8f9fa !important;
+            font-weight: 500;
+            padding: 0.75rem 1rem;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .navbar-nav .nav-link.active {
+            color: #00b4d8 !important;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #00b4d8 !important;
+        }
+
+        .navbar-toggler {
+            border-color: #00b4d8;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%280, 180, 216, 1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Dashboard</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#" id="customerNav">Customer Form</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="itemNav">Item Form</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="placeOrderNav">Place Order</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<section id="customer_sec">
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Customer Form</h2>
+
+        <!-- Customer Form -->
+        <form>
+            <div class="mb-3">
+                <label for="customerName" class="form-label">Name</label>
+                <input type="text" class="form-control" id="cid" placeholder="id" disabled>
+            </div>
+            <div class="mb-3">
+                <label for="customerName" class="form-label">Name</label>
+                <input type="text" class="form-control" id="customerName" placeholder="Enter your name" required>
+            </div>
+            <div class="mb-3">
+                <label for="customerAddress" class="form-label">Address</label>
+                <input type="text" class="form-control" id="customerAddress" placeholder="Enter your address" required>
+            </div>
+            <div class="mb-3">
+                <label for="customerTel" class="form-label">Telephone</label>
+                <input type="tel" class="form-control" id="customerTel" placeholder="Enter your phone number" required>
+            </div>
+
+            <!-- Buttons -->
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button id="save_btn" type="button" class="btn btn-primary me-md-2">Save</button>
+                <button id="update_btn" type="button" class="btn btn-warning me-md-2">Update</button>
+                <button id="delete_btn" type="button" class="btn btn-danger">Delete</button>
+                <button id="clear_btn" type="button" class="btn btn-secondary">Clear</button>
+            </div>
+        </form>
+
+        <!-- Customer Table -->
+        <div class="mt-5">
+            <h3 class="mb-4">Customer List</h3>
+            <table class="table table-striped table-bordered">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Telephone</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody id="customer_table_body">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</section>
+
+<section id="item_sec">
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Item Form</h2>
+
+        <!-- Item Form -->
+        <form id="itemForm">
+
+            <div class="mb-3">
+                <label for="itemId" class="form-label">Item ID</label>
+                <input type="text" class="form-control" id="itemId" placeholder="Enter item ID" disabled>
+            </div>
+            <div class="mb-3">
+                <label for="itemName" class="form-label">Item Name</label>
+                <input type="text" class="form-control" id="itemName" placeholder="Enter item name" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="itemDescription" class="form-label">Description</label>
+                <textarea class="form-control" id="itemDescription" rows="3" placeholder="Enter item description" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="itemPrice" class="form-label">Price</label>
+                <input type="number" class="form-control" id="itemPrice" placeholder="Enter item price" required>
+            </div>
+            <div class="mb-3">
+                <label for="itemQuantity" class="form-label">Quantity</label>
+                <input type="number" class="form-control" id="itemQuantity" placeholder="Enter item quantity" required>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
+                <button  type="button" class="btn btn-success me-md-2" id="itemSaveBtn">Save</button>
+                <button type="button" class="btn btn-warning me-md-2" id="updateBtn">Update</button>
+                <button type="button" class="btn btn-danger" id="deleteBtn">Delete</button>
+                <button type="button" class="btn btn-secondary" id="clearBtn">Clear</button>
+            </div>
+        </form>
+
+        <!-- Item Table -->
+        <h4 class="mt-5">Item List</h4>
+        <table class="table table-striped table-bordered mt-3">
+            <thead class="table-dark">
+            <tr>
+                <th>Id</th>
+                <th>Item Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Quantity</th>
+
+            </tr>
+            </thead>
+            <tbody id="itemTable">
+            <!-- Data will be dynamically inserted here -->
+            <tr>
+                <td colspan="6" class="text-center">No items available</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</section>
+
+<section id="placeOrder_sec">
+    <!-- Order Form -->
+    <h3 class="mt-5">Order</h3>
+
+    <div class="card my-4">
+        <div class="card-body">
+            <form id="orderForm">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="customerSelect" class="form-label">Select Customer</label>
+                        <select class="form-select" id="customerSelect" required>
+                            <option selected disabled value="">Choose a customer</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="customerName" class="form-label">Customer Name</label>
+                        <input type="text" class="form-control" id="cname" placeholder="Customer Name" disabled>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label for="itemSelect" class="form-label">Select Item</label>
+                        <select class="form-select" id="itemSelect" required>
+                            <option selected disabled value="">Choose an item</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="qtyOnHand" class="form-label">Qty On Hand</label>
+                        <input type="number" class="form-control" id="qtyOnHand" placeholder="Available" disabled>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="unitPrice" class="form-label">Unit Price ($)</label>
+                        <input type="number" class="form-control" id="unitPrice" placeholder="Unit Price" disabled>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="quantity" class="form-label">Quantity</label>
+                        <input type="number" class="form-control" id="quantity" placeholder="Enter quantity" required>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary w-100" id="cart_btn">Add To Cart</button>
+            </form>
+        </div>
+    </div>
+
+    <button id="test"> test</button>
+
+    <!-- Order Table -->
+    <h3 class="mt-5">Order Details</h3>
+    <table class="table table-striped table-bordered mt-3">
+        <thead class="table-dark">
+        <tr>
+            <th>customer id</th>
+            <th>Item Name</th>
+            <th>qty</th>
+            <th>Price</th>
+            <th>total</th>
+
+        </tr>
+        </thead>
+        <tbody id="ordertable">
+        <!-- Data will be dynamically inserted here -->
+        <tr>
+            <td colspan="6" class="text-center">No items available</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Order Total & Place Order Button -->
+    <div class="d-flex justify-content-between align-items-center">
+        <h4 id="orderTotal">Order Total: Rs.0.00</h4>
+        <button class="btn btn-success" id="placeOrder">Place Order</button>
+    </div>
+</section>
+
+
+<script src="web/JQ/jquery-3.7.1.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Initially, show only the customer section
+        $('#customer_sec').show();
+        $('#item_sec').hide();
+        $('#placeOrder_sec').hide();
+
+        // Click event for Customer Form link
+        $('#customerNav').click(function() {
+            $('#customer_sec').show();
+            $('#item_sec').hide();
+            $('#placeOrder_sec').hide();
+            // Add active class to highlight the current nav link
+            $(this).addClass('active').siblings().removeClass('active');
+        });
+
+        // Click event for Item Form link
+        $('#itemNav').click(function() {
+            $('#item_sec').show();
+            $('#customer_sec').hide();
+            $('#placeOrder_sec').hide();
+            // Add active class to highlight the current nav link
+            $(this).addClass('active').siblings().removeClass('active');
+        });
+
+        // Click event for Place Order link
+        $('#placeOrderNav').click(function() {
+            $('#placeOrder_sec').show();
+            $('#customer_sec').hide();
+            $('#item_sec').hide();
+            // Add active class to highlight the current nav link
+            $(this).addClass('active').siblings().removeClass('active');
+        });
+    });
+
+
+</script>
+<script src="web/JS/customer.js"></script>
+<script src="web/JS/item.js"></script>
+<script src="web/JS/order.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
