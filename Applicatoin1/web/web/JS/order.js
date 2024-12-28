@@ -124,7 +124,7 @@ function loadCartDAta(){
 }
 
 $("#placeOrder").click((e) => {
-    let oid = 1;
+    let oid = $("#OID").val();
     let cid = $('#customerSelect').val();
     let iid = $('#itemSelect').val();
 
@@ -132,6 +132,7 @@ $("#placeOrder").click((e) => {
                 url : 'http://localhost:8080/Applicatoin1_Web_exploded/order',
                 method : 'POST',
                 data : {
+                    oid:oid,
                     cid: cid,
                     iid: iid,
                     total: tot,
@@ -179,10 +180,48 @@ $("#placeOrder").click((e) => {
                 }),
                 success : function (response) {
                     console.log(response);
+                    cartdata.splice(0, cartdata.length);
+                    tot = 0;
+                    setOid();
+                    clearfield();
                 },
                 error : function (error){
                     console.log(error)
                 }
             })
             }
+
+            const setOid = () => {
+    console.log("order id set");
+                $.ajax({
+                    url : "http://localhost:8080/Applicatoin1_Web_exploded/order",
+                    method : 'GET',
+                    success : function (response) {
+                        let data = response;
+                        console.log(data+1);
+                        $("#OID").val(data+1)
+                    },
+                    error : function (error){
+                        console.log(error)
+                    }
+                })
+                    }
+
+                    setOid();
+
+const clearfield = () => {
+    $('#customerSelect').val('').change();
+    $('#itemSelect').val('').change();
+
+    // Clear customer and item-related fields
+    $('#cname').val('');
+    $('#qtyOnHand').val('');
+    $('#unitPrice').val('');
+    $('#quantity').val('')
+    $('#total').val('0');
+}
+
+
+
+
 
