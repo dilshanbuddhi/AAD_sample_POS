@@ -123,6 +123,10 @@ function loadCartDAta(){
     }
 }
 
+
+
+
+
 $("#placeOrder").click((e) => {
     let oid = $("#OID").val();
     let cid = $('#customerSelect').val();
@@ -150,8 +154,11 @@ $("#placeOrder").click((e) => {
         })
 
         function orderdetails(oid) {
+            let index = 0;
             cartdata.forEach(element => {
-                console.log(element.iid, element.qty);
+                console.log(cartdata.length)
+                index++;
+                console.log(element.iid, oid);
                 $.ajax({
                     url : 'http://localhost:8080/Applicatoin1_Web_exploded/orderdetails',
                     method : 'POST',
@@ -160,7 +167,8 @@ $("#placeOrder").click((e) => {
                         iid : element.iid,
                     },
                     success : function (response) {
-                        updateItems(element.iid, element.qty);
+                        updateItems(element.iid, element.qty , index);
+
                     },
                     error : function (error){
                         console.log(error)
@@ -170,7 +178,8 @@ $("#placeOrder").click((e) => {
             })
         }
 
-        function updateItems(iid, qty) {
+        function updateItems(iid, qty,index) {
+            console.log(index);
             $.ajax({
                 url : 'http://localhost:8080/Applicatoin1_Web_exploded/orderdetails',
                 method : 'PUT',
@@ -179,11 +188,15 @@ $("#placeOrder").click((e) => {
                     qty: qty,
                 }),
                 success : function (response) {
-                    console.log(response);
-                    cartdata.splice(0, cartdata.length);
-                    tot = 0;
-                    setOid();
-                    clearfield();
+                    if (index == cartdata.length) {
+                        console.log(response);
+                        cartdata.splice(0, cartdata.length);
+                        tot = 0;
+                        setOid();
+                        clearfield();
+                    }
+
+
                 },
                 error : function (error){
                     console.log(error)
